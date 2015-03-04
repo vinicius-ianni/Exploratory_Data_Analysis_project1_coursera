@@ -1,0 +1,13 @@
+file <- "household_power_consumption.txt";
+datum <- read.table(file, header=TRUE, sep=";", stringsAsFactors=FALSE, dec=".");
+data_interval <- datum[datum$Date %in% c("1/2/2007","2/2/2007") ,];
+date_and_time <- strptime(paste(data_interval$Date, data_interval$Time, sep=" "), "%d/%m/%Y %H:%M:%S");
+sm1 <- as.numeric(data_interval$Sub_metering_1);
+sm2 <- as.numeric(data_interval$Sub_metering_2);
+sm3 <- as.numeric(data_interval$Sub_metering_3);
+png("plot3.png", width=480, height=480);
+plot(date_and_time, sm1, type="l", ylab="Energy Submetering", xlab="");
+lines(date_and_time, sm2, type="l", col="red");
+lines(date_and_time, sm3, type="l", col="blue");
+legend("topright", c("Sub-metering 1", "Sub-metering 2", "Sub-metering 3"), lty=1, lwd=2.5, col=c("black", "red", "blue"));
+dev.off();
